@@ -3,12 +3,13 @@ import { Routes , Route, Navigate  } from "react-router-dom"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NewNote from './NewNote' 
 // import NoteForm from "./NoteForm";
-import useLocalStorage from "./customeHooks/useLocalStorage";
+import  useLocalStorage from './customeHooks/useLocalStorage'
+import { useMemo } from "react";
 
 
 // for each Note has a specific id and NoteData ta3ha
 export type Note = {
-  id : String
+  id : string
 }& NoteData
 
 export  type NoteData ={
@@ -26,13 +27,18 @@ export type RawNoteData = {
   markdown : string,
   tagIds : string[] 
 }
-type Tag = {
+export type Tag = {
   id : string ,
   label : string
 }
 const App = () => {
   const [notes , setNotes] = useLocalStorage<RawNote[]>('Notes' , [])
   const [tags , setTags] = useLocalStorage<Tag[]>('TAGS' , [])
+  const notesWithTags = useMemo(() => {
+    return notes.map(note => {
+      return { ...note, tags: tags.filter(tag => note.tagIds.includes(tag.id)) }
+    })
+  }, [notes, tags])
   return (
    <Container className="my-4">
      <Routes>
