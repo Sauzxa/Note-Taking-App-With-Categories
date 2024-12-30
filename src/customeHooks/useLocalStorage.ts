@@ -5,7 +5,7 @@ export default function useLocalStorage<T>(key: string, initialValue: T | (() =>
     const jsonValue = localStorage.getItem(key)
     if (jsonValue == null) {
       if (typeof initialValue === "function") {
-        return (initialValue as () => T)()
+        return (initialValue as () => T)() // assurer bali function type ta3ha generic type T 
       } else {
         return initialValue
       }
@@ -13,10 +13,10 @@ export default function useLocalStorage<T>(key: string, initialValue: T | (() =>
       return JSON.parse(jsonValue)
     }
   })
-// every time value tatbadal ysaviha
+// every time value tatbadal ysaviha f localStorage
   useEffect(() => {
     localStorage.setItem(key, JSON.stringify(value))
   }, [value, key])
 
-  return [value, setValue] as [T, typeof setValue]
+  return [value, setValue] as [T, typeof setValue]  // optional
 }

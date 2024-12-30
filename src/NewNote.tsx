@@ -7,13 +7,13 @@ type NewNoteProps = {
   availableTags: Tag[]
 }
 
-export function NewNote({ onSubmit, onAddTag, availableTags }: NewNoteProps) {
+export const NewNote = ({ onSubmit, onAddTag, availableTags }: NewNoteProps) => {
   return (
     <>
       <h1 className="mb-4">New Note</h1>
       <NoteForm
-        onSubmit={onSubmit}
         onAddTag={onAddTag}
+        onSubmit={onSubmit}
         availableTags={availableTags}
       />
     </>

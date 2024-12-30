@@ -1,10 +1,11 @@
 import { Container } from "react-bootstrap"
 import { Routes , Route, Navigate  } from "react-router-dom"
 import 'bootstrap/dist/css/bootstrap.min.css';
-import NewNote from './NewNote' 
+import { NewNote } from "./NewNote";
 // import NoteForm from "./NoteForm";
 import  useLocalStorage from './customeHooks/useLocalStorage'
 import { useMemo } from "react";
+import {v4 as uuidV4} from 'uuid'
 
 
 // for each Note has a specific id and NoteData ta3ha
@@ -20,7 +21,7 @@ export  type NoteData ={
 }
 export type RawNote = {
   id : string 
-}
+} & RawNoteData
 // Notes li 3andhom same tag li rah yatbadal
 export type RawNoteData = {
   title : string ,
@@ -32,6 +33,7 @@ export type Tag = {
   label : string
 }
 const App = () => {
+  
   const [notes , setNotes] = useLocalStorage<RawNote[]>('Notes' , [])
   const [tags , setTags] = useLocalStorage<Tag[]>('TAGS' , [])
   const notesWithTags = useMemo(() => {
@@ -39,11 +41,20 @@ const App = () => {
       return { ...note, tags: tags.filter(tag => note.tagIds.includes(tag.id)) }
     })
   }, [notes, tags])
+  const createNote = ({tags, ...data} : NoteData) =>{
+      setNotes(prevNotes =>{
+        return [
+          ...prevNotes ,{
+            ...data, id: uuidV4(), tagIds : tags.map(tag => tag.id)
+          }
+        ]
+      })
+  }
   return (
    <Container className="my-4">
      <Routes>
       <Route path="/" element={<h1>Home Page</h1>}  />
-     <Route path="new" element={<NewNote />} />
+     <Route path="new" element={<NewNote onSubmit={createNote} />} />
      <Route path="/:id" >
      <Route index element={<h1>show</h1>}  />
      <Route path="edit" element={<h1>edit</h1>}  />

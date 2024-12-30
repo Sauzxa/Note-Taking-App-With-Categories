@@ -16,7 +16,7 @@ export const NoteForm = ({onSubmit} : NoteFormProps) => {
     // function to remove submit event
     const HandleSubmit =(e : FormEvent)=>{
         e.preventDefault()
-
+     // build in function with Form bootstrap tag
         onSubmit({
           title : titleRef.current!.value,
           markdown : markdownRef.current!.value,
@@ -43,7 +43,7 @@ export const NoteForm = ({onSubmit} : NoteFormProps) => {
             value={selectedTags.map(tag => {
               return { label: tag.label, value: tag.id }
             })} 
-            
+            // onchange tji m3a lform
             onChange={tags => {
               setSelectedTags(
                 tags.map(tag => {
