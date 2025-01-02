@@ -13,7 +13,7 @@ export default function useLocalStorage<T>(key: string, initialValue: T | (() =>
       return JSON.parse(jsonValue)
     }
   })
-// every time value tatbadal ysaviha f localStorage
+// every time value tatbadal ysaviha flocalStorage
   useEffect(() => {
     localStorage.setItem(key, JSON.stringify(value))
   }, [value, key])
