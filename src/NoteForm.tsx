@@ -79,4 +79,4 @@ export const NoteForm = ({onSubmit} : NoteFormProps) => {
   )
 }
 
-export default NoteForm
+export default NoteForm;
