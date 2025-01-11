@@ -11,7 +11,7 @@ import {v4 as uuidV4} from 'uuid'
 // for each Note has a specific id and NoteData ta3ha
 export type Note = {
   id : string
-}& NoteData
+}& NoteData;
 
 export  type NoteData ={
   title : string ,
