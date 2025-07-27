@@ -18,6 +18,7 @@ export  type NoteData ={
   markdown : string
 
 }
+// for the localStorage to store the notes daiman f localStorage
 export type RawNote = {
   id : string 
 } & RawNoteData
