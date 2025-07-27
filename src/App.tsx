@@ -2,7 +2,6 @@ import { Container } from "react-bootstrap"
 import { Routes , Route, Navigate  } from "react-router-dom"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { NewNote } from "./NewNote";
-// import NoteForm from "./NoteForm";
 import  useLocalStorage from './customeHooks/useLocalStorage'
 import { useMemo } from "react";
 import {v4 as uuidV4} from 'uuid'
@@ -41,6 +40,11 @@ const App = () => {
       return { ...note, tags: tags.filter(tag => note.tagIds.includes(tag.id)) }
     })
   }, [notes, tags])
+  
+  const onAddTag = (tag: Tag) => {
+    setTags(prev => [...prev, tag])
+  }
+  
   const createNote = ({tags, ...data} : NoteData) =>{
       setNotes(prevNotes =>{
         return [
@@ -54,7 +58,11 @@ const App = () => {
    <Container className="my-4">
      <Routes>
       <Route path="/" element={<h1>Home Page</h1>}  />
-     <Route path="new" element={<NewNote onSubmit={createNote} />} />
+     <Route path="new" element={<NewNote 
+        onSubmit={createNote} 
+        onAddTag={onAddTag} 
+        availableTags={tags} 
+      />} />
      <Route path="/:id" >
      <Route index element={<h1>show</h1>}  />
      <Route path="edit" element={<h1>edit</h1>}  />
